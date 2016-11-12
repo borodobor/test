@@ -9,7 +9,7 @@ class m161110_184436_create_tables extends Migration
         $this->createTable('user', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
-            'balance' => $this->decimal(10,2),
+            'balance' => $this->decimal(10, 2),
             'created_at' => $this->dateTime()->defaultValue(date('Y-m-d'))
         ]);
         $this->createIndex('user_id', 'user', 'id');
@@ -18,7 +18,7 @@ class m161110_184436_create_tables extends Migration
         $this->createTable('user_transaction', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
-            'amount' => $this->decimal(10,2),
+            'amount' => $this->decimal(10, 2),
             'time' => $this->dateTime()
         ]);
         $this->createIndex('user_id', 'user_transaction', 'user_id');
@@ -29,7 +29,7 @@ class m161110_184436_create_tables extends Migration
             'time' => $this->dateTime()->defaultValue(date('Y-m-d')),
             'pay_system' => $this->smallInteger(1),
             'user_id' => $this->integer(),
-            'amount' => $this->decimal(10,2),
+            'amount' => $this->decimal(10, 2),
             'status' => $this->smallInteger(1),
             'comment' => $this->text()
         ]);
@@ -40,7 +40,7 @@ class m161110_184436_create_tables extends Migration
 
     public function safeDown()
     {
-        $this->dropForeignKey('log_user_id','log');
+        $this->dropForeignKey('log_user_id', 'log');
         $this->dropTable('log');
         $this->dropForeignKey('transaction_user_id', 'user_transaction');
         $this->dropTable('user_transaction');
