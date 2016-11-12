@@ -50,6 +50,36 @@ class UserTransaction extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function create($user, $amount, $paySystem)
+    {
+        $model = new UserTransaction();
+        $model->user_id = $user;
+        $model->amount = $amount;
+        $model->time = date('Y-m-d H:i:s');
+        // создаем запись в лог
+        $log = new Log();
+        $log->pay_system = $paySystem;
+        $log->user_id = $user;
+        $log->amount = $amount;
+        $log->time = $model->time;
+        // если транзакция успешно записана
+        if ($model->save()) {
+            $us = User::findOne($user);
+            $us->datetime = $model->time;
+            $us->balance = $us->balance + $amount;
+            $us->save();
+            $log->status = 1;
+            $log->comment = 'success';
+            $log->save();
+            return 1;
+        } else {
+            $log->status = 0;
+            $log->comment = json_encode($model->errors);
+            $log->save();
+            return 0;
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

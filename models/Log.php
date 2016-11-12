@@ -35,8 +35,7 @@ class Log extends \yii\db\ActiveRecord
         return [
             [['time'], 'safe'],
             [['pay_system', 'user_id', 'status'], 'integer'],
-            [['amount'], 'number'],
-            [['comment'], 'string'],
+            [['comment', 'amount'], 'string'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }

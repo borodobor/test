@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property string $name
  * @property string $balance
- * @property string $created_at
+ * @property string $datetime
  *
  * @property Log[] $logs
  * @property UserTransaction[] $userTransactions
@@ -32,7 +32,7 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['balance'], 'number'],
-            [['created_at'], 'safe'],
+            [['datetime'], 'safe'],
             [['name'], 'string', 'max' => 255],
         ];
     }
@@ -46,7 +46,7 @@ class User extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
             'balance' => 'Balance',
-            'created_at' => 'Created At',
+            'datetime' => 'DateTime',
         ];
     }
 

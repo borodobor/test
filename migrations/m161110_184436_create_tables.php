@@ -6,15 +6,17 @@ class m161110_184436_create_tables extends Migration
 {
     public function safeUp()
     {
+        // таблица пользователей
         $this->createTable('user', [
             'id' => $this->primaryKey(),
             'name' => $this->string(),
             'balance' => $this->decimal(10, 2),
-            'created_at' => $this->dateTime()->defaultValue(date('Y-m-d'))
+            'datetime' => $this->dateTime()
         ]);
         $this->createIndex('user_id', 'user', 'id');
         $this->createIndex('user_name', 'user', 'name');
 
+        // таблица транзакций
         $this->createTable('user_transaction', [
             'id' => $this->primaryKey(),
             'user_id' => $this->integer(),
@@ -24,12 +26,13 @@ class m161110_184436_create_tables extends Migration
         $this->createIndex('user_id', 'user_transaction', 'user_id');
         $this->addForeignKey('transaction_user_id', 'user_transaction', 'user_id', 'user', 'id');
 
+        // таблица с логами
         $this->createTable('log', [
             'id' => $this->primaryKey(),
-            'time' => $this->dateTime()->defaultValue(date('Y-m-d')),
+            'time' => $this->dateTime(),
             'pay_system' => $this->smallInteger(1),
             'user_id' => $this->integer(),
-            'amount' => $this->decimal(10, 2),
+            'amount' => $this->string(),
             'status' => $this->smallInteger(1),
             'comment' => $this->text()
         ]);
