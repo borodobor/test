@@ -2,6 +2,8 @@
 
 namespace app\controllers;
 
+use app\models\User;
+use app\models\UserTransaction;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -60,7 +62,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $user = Yii::$app->request->post('User')['name'];
+        if ($user) {
+            $model = User::find()->where(['name' => $user])->one();
+        } else {
+            $nouser = true;
+        }
+        if (!$model) {
+            $model = new User();
+        }
+        return $this->render('index', ['model' => $model, 'nouser' => $nouser]);
     }
 
     /**
